@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>约会邀请</title>
+<title>çº¦ä¼éè¯·</title>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; min-height: 100vh; font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif; overflow-x: hidden; }
@@ -114,9 +114,9 @@ body { background: linear-gradient(135deg, #fce4ec, #f8bbd0, #f48fb1); backgroun
   <!-- ===== PAGE 1: INVITATION ===== -->
   <div class="page active" id="page1">
     <div class="invitation-box" id="invitationBox">
-      <h1 class="main-title">要不要和我一起约会？</h1>
-      <button class="btn-yes" onclick="goTo(2)">愿 意</button>
-      <button class="btn-no" id="btnNo" onmouseenter="dodgeButton()" onclick="dodgeButton()">不要</button>
+      <h1 class="main-title">è¦ä¸è¦åæä¸èµ·çº¦ä¼ï¼</h1>
+      <button class="btn-yes" onclick="goTo(2)">æ¿ æ</button>
+      <button class="btn-no" id="btnNo" onmouseenter="dodgeButton()" onclick="dodgeButton()">ä¸è¦</button>
     </div>
     <div class="nav-dots">
       <span class="nav-dot active-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span>
@@ -126,9 +126,9 @@ body { background: linear-gradient(135deg, #fce4ec, #f8bbd0, #f48fb1); backgroun
   <!-- ===== PAGE 2: CONFIRMATION ===== -->
   <div class="page" id="page2">
     <div class="confirm-box">
-      <span class="shy-emoji">😳</span>
-      <p class="warm-text">嘿嘿，我就知道你会的！<br>准备好了吗？</p>
-      <button class="btn-continue" onclick="goTo(3)">继 续</button>
+      <span class="shy-emoji">ð³</span>
+      <p class="warm-text">å¿å¿ï¼æå°±ç¥éä½ ä¼çï¼<br>åå¤å¥½äºåï¼</p>
+      <button class="btn-continue" onclick="goTo(3)">ç»§ ç»­</button>
     </div>
     <div class="nav-dots">
       <span class="nav-dot"></span><span class="nav-dot active-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span>
@@ -138,10 +138,10 @@ body { background: linear-gradient(135deg, #fce4ec, #f8bbd0, #f48fb1); backgroun
   <!-- ===== PAGE 3: TIME ===== -->
   <div class="page" id="page3">
     <div class="time-box">
-      <p class="time-label">📅 你想什么时候见面？</p>
+      <p class="time-label">ð ä½ æ³ä»ä¹æ¶åè§é¢ï¼</p>
       <input type="date" class="date-input" id="dateInput">
       <input type="time" class="time-input" id="timeInput" value="17:00">
-      <button class="btn-time-next" onclick="goTo(4)">选 好 了</button>
+      <button class="btn-time-next" onclick="goTo(4)">é å¥½ äº</button>
     </div>
     <div class="nav-dots">
       <span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot active-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span>
@@ -151,9 +151,9 @@ body { background: linear-gradient(135deg, #fce4ec, #f8bbd0, #f48fb1); backgroun
   <!-- ===== PAGE 4: FOOD ===== -->
   <div class="page" id="page4">
     <div class="food-box">
-      <p class="food-title">🍽️ 你想吃什么？（可多选）</p>
+      <p class="food-title">ð½ï¸ ä½ æ³åä»ä¹ï¼ï¼å¯å¤éï¼</p>
       <div class="food-grid" id="foodGrid"></div>
-      <button class="btn-food-next" onclick="goTo(5)">选 好 了</button>
+      <button class="btn-food-next" onclick="goTo(5)">é å¥½ äº</button>
     </div>
     <div class="nav-dots">
       <span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot active-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span>
@@ -163,9 +163,9 @@ body { background: linear-gradient(135deg, #fce4ec, #f8bbd0, #f48fb1); backgroun
   <!-- ===== PAGE 5: MOVIE ===== -->
   <div class="page" id="page5">
     <div class="movie-box">
-      <p class="movie-title">🎬 想看哪部电影？（选一部）</p>
+      <p class="movie-title">ð¬ æ³çåªé¨çµå½±ï¼ï¼éä¸é¨ï¼</p>
       <div class="movie-grid" id="movieGrid"></div>
-      <button class="btn-movie-next" onclick="goTo(6)">生 成 海 报</button>
+      <button class="btn-movie-next" onclick="goTo(6)">ç æ æµ· æ¥</button>
     </div>
     <div class="nav-dots">
       <span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot active-dot"></span><span class="nav-dot"></span>
@@ -179,9 +179,9 @@ body { background: linear-gradient(135deg, #fce4ec, #f8bbd0, #f48fb1); backgroun
         <canvas id="posterCanvas"></canvas>
       </div>
       <div class="btn-group">
-        <button class="btn-notify" id="btnNotify" onclick="notifyHost()">📨 通知发起人</button>
-        <button class="btn-share" onclick="sharePoster()">📤 分享海报</button>
-        <button class="btn-restart" onclick="restart()">🔄 重新来过</button>
+        <button class="btn-notify" id="btnNotify" onclick="notifyHost()">ð¨ éç¥åèµ·äºº</button>
+        <button class="btn-share" onclick="sharePoster()">ð¤ åäº«æµ·æ¥</button>
+        <button class="btn-restart" onclick="restart()">ð éæ°æ¥è¿</button>
       </div>
     </div>
     <div class="nav-dots">
@@ -194,7 +194,7 @@ body { background: linear-gradient(135deg, #fce4ec, #f8bbd0, #f48fb1); backgroun
 <script>
 // ===== STATE =====
 let currentPage = 1;
-const noTexts = ['不要', '想清楚再选', '你确定吗', '再想想', '真的要拒绝？', '别走…', '点错了吧', '我不信…', '给个机会', '求你了🥺'];
+const noTexts = ['ä¸è¦', 'æ³æ¸æ¥åé', 'ä½ ç¡®å®å', 'åæ³æ³', 'ççè¦æç»ï¼', 'å«èµ°â¦', 'ç¹éäºå§', 'æä¸ä¿¡â¦', 'ç»ä¸ªæºä¼', 'æ±ä½ äºð¥º'];
 
 // ===== PAGE 1: DODGE BUTTON =====
 function dodgeButton() {
@@ -228,7 +228,7 @@ function dodgeButton() {
 
 function spawnHearts() {
   const box = document.getElementById('invitationBox');
-  const hearts = ['💕','💖','💗','💝','💘','🌸'];
+  const hearts = ['ð','ð','ð','ð','ð','ð¸'];
   for (let i = 0; i < 4; i++) {
     const h = document.createElement('span');
     h.className = 'heart-deco';
@@ -257,15 +257,15 @@ function initDateTime() {
 
 // ===== PAGE 4: FOOD GRID =====
 const foods = [
-  { emoji: '🥘', label: '粤菜' },
-  { emoji: '🍜', label: '东南亚菜' },
-  { emoji: '🍲', label: '火锅' },
-  { emoji: '🍖', label: '烧烤' },
-  { emoji: '🥩', label: '西餐' },
-  { emoji: '🏮', label: '居酒屋' },
-  { emoji: '🌶️', label: '川菜' },
-  { emoji: '🫑', label: '湘菜' },
-  { emoji: '😢', label: '饿肚子' },
+  { emoji: 'ð¥', label: 'ç²¤è' },
+  { emoji: 'ð', label: 'ä¸åäºè' },
+  { emoji: 'ð²', label: 'ç«é' },
+  { emoji: 'ð', label: 'ç§ç¤' },
+  { emoji: 'ð¥©', label: 'è¥¿é¤' },
+  { emoji: 'ð®', label: 'å±éå±' },
+  { emoji: 'ð¶ï¸', label: 'å·è' },
+  { emoji: 'ð«', label: 'æ¹è' },
+  { emoji: 'ð¢', label: 'é¥¿èå­' },
 ];
 
 function buildFoodGrid() {
@@ -275,7 +275,7 @@ function buildFoodGrid() {
     const card = document.createElement('div');
     card.className = 'food-card';
     card.dataset.index = i;
-    card.innerHTML = `<span class="food-emoji">${f.emoji}</span><span class="food-label">${f.label}</span><span class="check-badge">✓</span>`;
+    card.innerHTML = `<span class="food-emoji">${f.emoji}</span><span class="food-label">${f.label}</span><span class="check-badge">â</span>`;
     card.onclick = () => {
       card.classList.toggle('selected');
     };
@@ -290,10 +290,10 @@ function getSelectedFoods() {
 
 // ===== PAGE 5: MOVIE SELECTION =====
 const movies = [
-  { emoji: '🕷️', label: '蜘蛛侠' },
-  { emoji: '🧚', label: '八仙' },
-  { emoji: '⚽', label: '功夫女足' },
-  { emoji: '😍', label: '痴迷' },
+  { emoji: 'ð·ï¸', label: 'èèä¾ ' },
+  { emoji: 'ð§', label: 'å«ä»' },
+  { emoji: 'â½', label: 'åå¤«å¥³è¶³' },
+  { emoji: 'ð', label: 'ç´è¿·' },
 ];
 
 function buildMovieGrid() {
@@ -303,7 +303,7 @@ function buildMovieGrid() {
     const card = document.createElement('div');
     card.className = 'movie-card';
     card.dataset.index = i;
-    card.innerHTML = `<span class="movie-emoji">${m.emoji}</span><span class="movie-label">${m.label}</span><span class="check-badge">✓</span>`;
+    card.innerHTML = `<span class="movie-emoji">${m.emoji}</span><span class="movie-label">${m.label}</span><span class="check-badge">â</span>`;
     card.onclick = () => {
       // Single select: deselect all others
       document.querySelectorAll('#movieGrid .movie-card').forEach(c => c.classList.remove('selected'));
@@ -330,7 +330,7 @@ function drawPoster() {
   let dateStr = dateVal;
   if (dateVal) {
     const [y, m, d] = dateVal.split('-');
-    dateStr = `${y}年${parseInt(m)}月${parseInt(d)}日`;
+    dateStr = `${y}å¹´${parseInt(m)}æ${parseInt(d)}æ¥`;
   }
 
   const W = 1080, H = 1440;
@@ -362,7 +362,7 @@ function drawPoster() {
     ctx.globalAlpha = h.o;
     ctx.fillStyle = '#e91e63';
     ctx.font = `${h.s}px serif`;
-    ctx.fillText('♥', h.x, h.y);
+    ctx.fillText('â¥', h.x, h.y);
     ctx.restore();
   });
 
@@ -378,7 +378,7 @@ function drawPoster() {
   ctx.fillStyle = '#d81b60';
   ctx.font = 'bold 52px "PingFang SC","Microsoft YaHei",sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('💕 约会邀请函 💕', W / 2, 140);
+  ctx.fillText('ð çº¦ä¼éè¯·å½ ð', W / 2, 140);
 
   // Subtitle line
   ctx.strokeStyle = 'rgba(233,30,99,.25)';
@@ -408,7 +408,7 @@ function drawPoster() {
   ctx.fillStyle = '#ad1457';
   ctx.font = 'bold 30px "PingFang SC","Microsoft YaHei",sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('📅 见面时间', W / 2, cy);
+  ctx.fillText('ð è§é¢æ¶é´', W / 2, cy);
   cy += 50;
 
   ctx.fillStyle = '#d81b60';
@@ -432,13 +432,13 @@ function drawPoster() {
   // Food
   ctx.fillStyle = '#ad1457';
   ctx.font = 'bold 28px "PingFang SC","Microsoft YaHei",sans-serif';
-  ctx.fillText('🍽️ 想吃的美食', W / 2, cy + 10);
+  ctx.fillText('ð½ï¸ æ³åçç¾é£', W / 2, cy + 10);
   cy += 55;
 
   if (selected.length === 0) {
     ctx.fillStyle = '#f48fb1';
     ctx.font = '24px "PingFang SC","Microsoft YaHei",sans-serif';
-    ctx.fillText('（还没来得及选呢）', W / 2, cy);
+    ctx.fillText('ï¼è¿æ²¡æ¥å¾åéå¢ï¼', W / 2, cy);
     cy += 40;
   } else {
     const badgeW = 150, badgeH = 44, gap = 16, maxPerRow = 3;
@@ -477,7 +477,7 @@ function drawPoster() {
   // Movie
   ctx.fillStyle = '#ad1457';
   ctx.font = 'bold 28px "PingFang SC","Microsoft YaHei",sans-serif';
-  ctx.fillText('🎬 想看的电影', W / 2, cy + 24);
+  ctx.fillText('ð¬ æ³çççµå½±', W / 2, cy + 24);
   cy += 55;
 
   if (selectedMovie) {
@@ -496,7 +496,7 @@ function drawPoster() {
   } else {
     ctx.fillStyle = '#f48fb1';
     ctx.font = '24px "PingFang SC","Microsoft YaHei",sans-serif';
-    ctx.fillText('（还没选呢）', W / 2, cy);
+    ctx.fillText('ï¼è¿æ²¡éå¢ï¼', W / 2, cy);
     cy += 40;
   }
 
@@ -504,19 +504,19 @@ function drawPoster() {
   cy = Math.max(cy + 40, cardY + cardH - 130);
   ctx.fillStyle = '#d81b60';
   ctx.font = 'bold 36px "PingFang SC","Microsoft YaHei",sans-serif';
-  ctx.fillText('不见不散 💗', W / 2, cy);
+  ctx.fillText('ä¸è§ä¸æ£ ð', W / 2, cy);
 
   // Bottom area outside card
   cy = cardY + cardH + 50;
   ctx.fillStyle = 'rgba(233,30,99,.5)';
   ctx.font = '22px "PingFang SC","Microsoft YaHei",sans-serif';
-  ctx.fillText('— 期待与你共度美好时光 —', W / 2, cy);
+  ctx.fillText('â æå¾ä¸ä½ å±åº¦ç¾å¥½æ¶å â', W / 2, cy);
 
   cy += 45;
   ctx.fillStyle = 'rgba(173,20,87,.4)';
   ctx.font = '20px "PingFang SC","Microsoft YaHei",sans-serif';
   const now = new Date();
-  ctx.fillText(`生成于 ${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()}`, W / 2, cy);
+  ctx.fillText(`çæäº ${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()}`, W / 2, cy);
 }
 
 function roundRect(ctx, x, y, w, h, r) {
@@ -537,12 +537,12 @@ function roundRect(ctx, x, y, w, h, r) {
 function sharePoster() {
   const canvas = document.getElementById('posterCanvas');
   canvas.toBlob(function(blob) {
-    if (!blob) { alert('海报生成失败，请重试'); return; }
+    if (!blob) { alert('æµ·æ¥çæå¤±è´¥ï¼è¯·éè¯'); return; }
     const url = URL.createObjectURL(blob);
     if (navigator.share) {
       navigator.share({
-        title: '约会邀请',
-        text: '期待与你约会！',
+        title: 'çº¦ä¼éè¯·',
+        text: 'æå¾ä¸ä½ çº¦ä¼ï¼',
         files: [new File([blob], 'date-invitation.png', { type: 'image/png' })]
       }).catch(() => fallbackShare(url));
     } else {
@@ -554,7 +554,7 @@ function sharePoster() {
 function fallbackShare(url) {
   const a = document.createElement('a');
   a.href = url;
-  a.download = '约会邀请海报.png';
+  a.download = 'çº¦ä¼éè¯·æµ·æ¥.png';
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 5000);
 }
@@ -569,10 +569,7 @@ function showToast(msg, type) {
 }
 
 // ===== NOTIFY HOST =====
-const RELAY_URLS = [
-  'http://localhost:18888',
-  'http://127.0.0.1:18888'
-];
+const FEISHU_WEBHOOK = 'https://open.feishu.cn/open-apis/bot/v2/hook/131f290a-fe12-42e9-9823-b65a9a813421';
 
 function getResultText() {
   const dateVal = document.getElementById('dateInput').value;
@@ -580,62 +577,62 @@ function getResultText() {
   const selected = getSelectedFoods();
   const movie = getSelectedMovie();
   let dateDisplay = dateVal;
-  if (dateVal) { const [y, m, d] = dateVal.split('-'); dateDisplay = `${y}年${parseInt(m)}月${parseInt(d)}日`; }
-  const foodsText = selected.map(f => f.emoji + f.label).join('、') || '（未选择）';
-  const movieText = movie ? movie.emoji + movie.label : '（未选择）';
-  return `💕 约会邀请已接受！\n📅 ${dateDisplay} ${timeVal}\n🍽️ ${foodsText}\n🎬 ${movieText}`;
-}
-
-async function tryRelay(url, data) {
-  try {
-    const resp = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-      signal: AbortSignal.timeout(5000)
-    });
-    const result = await resp.json();
-    return result.ok;
-  } catch (e) { return false; }
+  if (dateVal) { const [y, m, d] = dateVal.split('-'); dateDisplay = `${y}å¹´${parseInt(m)}æ${parseInt(d)}æ¥`; }
+  const foodsText = selected.map(f => f.emoji + f.label).join('ã') || 'ï¼æªéæ©ï¼';
+  const movieText = movie ? movie.emoji + movie.label : 'ï¼æªéæ©ï¼';
+  return `ð çº¦ä¼éè¯·å·²æ¥åï¼\nð ${dateDisplay} ${timeVal}\nð½ï¸ ${foodsText}\nð¬ ${movieText}`;
 }
 
 async function notifyHost() {
   const btn = document.getElementById('btnNotify');
   btn.disabled = true;
-  btn.textContent = '⏳ 发送中...';
-  showToast('正在尝试自动通知...', 'info');
+  btn.textContent = 'â³ åéä¸­...';
 
   const dateVal = document.getElementById('dateInput').value;
   const timeVal = document.getElementById('timeInput').value;
   const selected = getSelectedFoods();
   const movie = getSelectedMovie();
-  const data = {
-    date: dateVal,
-    time: timeVal,
-    foods: selected.map(f => f.label),
-    movie: movie ? movie.label : ''
-  };
+  let dateDisplay = dateVal;
+  if (dateVal) { const [y, m, d] = dateVal.split('-'); dateDisplay = `${y}å¹´${parseInt(m)}æ${parseInt(d)}æ¥`; }
+  const foodsText = selected.map(f => f.label).join('ã') || 'ï¼æªéæ©ï¼';
+  const movieText = movie ? movie.label : 'ï¼æªéæ©ï¼';
 
-  // Try all relay URLs
-  let sent = false;
-  for (const url of RELAY_URLS) {
-    sent = await tryRelay(url, data);
-    if (sent) break;
-  }
+  const message = [
+    'ð æäººæ¥åäºä½ ççº¦ä¼éè¯·ï¼',
+    '',
+    'ð è§é¢æ¶é´ï¼' + dateDisplay + ' ' + timeVal,
+    'ð½ï¸ æ³åçç¾é£ï¼' + foodsText,
+    'ð¬ æ³çççµå½±ï¼' + movieText,
+    '',
+    'â å¿«å»åå¤å§ï¼'
+  ].join('\n');
 
-  if (sent) {
-    showToast('✅ 已通知发起人！消息已发送', 'success');
-    btn.textContent = '✅ 已通知';
-  } else {
+  try {
+    const resp = await fetch(FEISHU_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        msg_type: 'text',
+        content: { text: message }
+      })
+    });
+    const result = await resp.json();
+    if (result.code === 0 || result.StatusCode === 0) {
+      showToast('â å·²éç¥åèµ·äººï¼æ¶æ¯å·²åé', 'success');
+      btn.textContent = 'â å·²éç¥';
+    } else {
+      throw new Error('webhook failed');
+    }
+  } catch (e) {
     // Fallback: copy to clipboard
     const text = getResultText();
     try {
       await navigator.clipboard.writeText(text);
-      showToast('📋 结果已复制！请粘贴发送给发起人', 'info');
-    } catch (e) {
-      showToast('⚠️ 自动通知失败，请截图发给发起人', 'error');
+      showToast('ð ç»æå·²å¤å¶ï¼è¯·ç²è´´åéç»åèµ·äºº', 'info');
+    } catch (e2) {
+      showToast('â ï¸ èªå¨éç¥å¤±è´¥ï¼è¯·æªå¾åç»åèµ·äºº', 'error');
     }
-    btn.textContent = '📨 重试通知';
+    btn.textContent = 'ð¨ éè¯éç¥';
   }
   btn.disabled = false;
 }
@@ -665,19 +662,19 @@ function restart() {
   const btnNo = document.getElementById('btnNo');
   btnNo.style.left = '';
   btnNo.style.top = '';
-  btnNo.textContent = '不要';
+  btnNo.textContent = 'ä¸è¦';
   // Clear food selection
   document.querySelectorAll('#foodGrid .food-card').forEach(c => c.classList.remove('selected'));
   // Clear movie selection
   document.querySelectorAll('#movieGrid .movie-card').forEach(c => c.classList.remove('selected'));
   // Reset notify button
   const btnNotify = document.getElementById('btnNotify');
-  if (btnNotify) { btnNotify.textContent = '📨 通知发起人'; btnNotify.disabled = false; }
+  if (btnNotify) { btnNotify.textContent = 'ð¨ éç¥åèµ·äºº'; btnNotify.disabled = false; }
   goTo(1);
 }
 
 // ===== INITIAL TRIGGERS =====
-// Place "不要" button near center initially
+// Place "ä¸è¦" button near center initially
 window.addEventListener('load', () => {
   const btnNo = document.getElementById('btnNo');
   const box = document.getElementById('invitationBox');
