@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>约会邀请</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; min-height: 100vh; font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif; overflow-x: hidden; }
+body { background: linear-gradient(135deg, #fce4ec, #f8bbd0, #f48fb1); background-attachment: fixed; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+.container { position: relative; width: 100%; max-width: 480px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+
+.page { display: none; width: 100%; flex-direction: column; align-items: center; justify-content: center; animation: fadeSlideIn .45s ease; }
+.page.active { display: flex; }
+
+@keyframes fadeSlideIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes heartbeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.18); } 30% { transform: scale(1); } 45% { transform: scale(1.14); } 60% { transform: scale(1); } }
+
+/* ===== PAGE 1: INVITATION ===== */
+.invitation-box { position: relative; width: 100%; min-height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px; }
+.main-title { font-size: clamp(22px, 5vw, 30px); color: #d81b60; font-weight: 700; text-align: center; text-shadow: 0 2px 8px rgba(216,27,96,.15); letter-spacing: 2px; }
+.btn-yes { position: relative; z-index: 2; width: clamp(140px, 40vw, 180px); height: 52px; border: none; border-radius: 50px; background: linear-gradient(135deg, #f06292, #e91e63); color: #fff; font-size: 20px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 24px rgba(233,30,99,.4); transition: transform .18s, box-shadow .18s; letter-spacing: 4px; }
+.btn-yes:active { transform: scale(.94); box-shadow: 0 3px 12px rgba(233,30,99,.3); }
+
+.btn-no { position: absolute; z-index: 1; width: 120px; height: 44px; border: 2px solid #e91e63; border-radius: 50px; background: rgba(255,255,255,.75); color: #e91e63; font-size: 16px; font-weight: 600; cursor: pointer; transition: top .22s cubic-bezier(.25,.8,.25,1.2), left .22s cubic-bezier(.25,.8,.25,1.2), opacity .15s; white-space: nowrap; }
+.btn-no:active { background: rgba(255,255,255,.95); }
+
+.heart-deco { position: absolute; pointer-events: none; opacity: .22; font-size: 20px; animation: floatUp 3s ease-in infinite; }
+@keyframes floatUp { 0% { transform: translateY(0) scale(.8); opacity: .22; } 50% { opacity: .38; } 100% { transform: translateY(-120px) scale(1.3); opacity: 0; } }
+
+/* ===== PAGE 2: CONFIRMATION ===== */
+.confirm-box { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+.shy-emoji { font-size: 72px; animation: heartbeat 1.4s ease-in-out infinite; }
+.warm-text { font-size: clamp(18px, 4vw, 22px); color: #d81b60; font-weight: 600; text-align: center; line-height: 1.7; }
+.btn-continue { width: clamp(160px, 44vw, 200px); height: 50px; border: none; border-radius: 50px; background: linear-gradient(135deg, #f48fb1, #ec407a); color: #fff; font-size: 18px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 24px rgba(236,64,122,.35); transition: transform .18s; letter-spacing: 2px; }
+.btn-continue:active { transform: scale(.94); }
+.name-input { width: 100%; max-width: 240px; height: 48px; border: 2px solid #f48fb1; border-radius: 16px; background: rgba(255,255,255,.8); color: #d81b60; font-size: 17px; text-align: center; padding: 0 16px; outline: none; transition: border-color .2s, box-shadow .2s; font-family: inherit; }
+.name-input:focus { border-color: #e91e63; box-shadow: 0 0 0 4px rgba(233,30,99,.1); }
+.name-input::placeholder { color: #f48fb1; }
+
+/* ===== PAGE 3: TIME ===== */
+.time-box { display: flex; flex-direction: column; align-items: center; gap: 28px; width: 100%; max-width: 360px; }
+.time-label { font-size: clamp(18px, 4vw, 22px); color: #d81b60; font-weight: 600; text-align: center; }
+.date-input, .time-input { width: 100%; max-width: 280px; height: 50px; border: 2px solid #f48fb1; border-radius: 16px; background: rgba(255,255,255,.8); color: #d81b60; font-size: 17px; text-align: center; padding: 0 16px; outline: none; transition: border-color .2s, box-shadow .2s; font-family: inherit; }
+.date-input:focus, .time-input:focus { border-color: #e91e63; box-shadow: 0 0 0 4px rgba(233,30,99,.1); }
+.btn-time-next { width: clamp(160px, 44vw, 200px); height: 50px; border: none; border-radius: 50px; background: linear-gradient(135deg, #f48fb1, #ec407a); color: #fff; font-size: 18px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 24px rgba(236,64,122,.35); transition: transform .18s; letter-spacing: 2px; }
+.btn-time-next:active { transform: scale(.94); }
+
+/* ===== PAGE 4: FOOD ===== */
+.food-box { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
+.food-title { font-size: clamp(18px, 4vw, 22px); color: #d81b60; font-weight: 600; text-align: center; }
+.food-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; max-width: 360px; }
+.food-card { aspect-ratio: 1; border-radius: 18px; background: rgba(255,255,255,.75); border: 2px solid transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; cursor: pointer; transition: all .22s; position: relative; overflow: hidden; }
+.food-card .food-emoji { font-size: 32px; transition: transform .2s; }
+.food-card .food-label { font-size: 13px; color: #ad1457; font-weight: 600; }
+.food-card.selected { background: linear-gradient(135deg, #fce4ec, #f8bbd0); border-color: #e91e63; box-shadow: 0 4px 18px rgba(233,30,99,.25); }
+.food-card.selected .food-emoji { transform: scale(1.15); }
+.food-card .check-badge { position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; border-radius: 50%; background: #e91e63; color: #fff; font-size: 12px; display: none; align-items: center; justify-content: center; }
+.food-card.selected .check-badge { display: flex; }
+.btn-food-next { width: clamp(160px, 44vw, 200px); height: 50px; border: none; border-radius: 50px; background: linear-gradient(135deg, #f48fb1, #ec407a); color: #fff; font-size: 18px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 24px rgba(236,64,122,.35); transition: transform .18s; letter-spacing: 2px; margin-top: 8px; }
+.btn-food-next:active { transform: scale(.94); }
+
+/* ===== PAGE 5: MOVIE ===== */
+.movie-box { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
+.movie-title { font-size: clamp(18px, 4vw, 22px); color: #d81b60; font-weight: 600; text-align: center; }
+.movie-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; max-width: 320px; }
+.movie-card { aspect-ratio: 3/4; border-radius: 18px; background: rgba(255,255,255,.75); border: 2px solid transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: all .22s; position: relative; overflow: hidden; }
+.movie-card .movie-emoji { font-size: 42px; transition: transform .2s; }
+.movie-card .movie-label { font-size: 15px; color: #ad1457; font-weight: 600; }
+.movie-card.selected { background: linear-gradient(135deg, #fce4ec, #f8bbd0); border-color: #e91e63; box-shadow: 0 4px 18px rgba(233,30,99,.25); }
+.movie-card.selected .movie-emoji { transform: scale(1.15); }
+.movie-card .check-badge { position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; border-radius: 50%; background: #e91e63; color: #fff; font-size: 12px; display: none; align-items: center; justify-content: center; }
+.movie-card.selected .check-badge { display: flex; }
+.btn-movie-next { width: clamp(160px, 44vw, 200px); height: 50px; border: none; border-radius: 50px; background: linear-gradient(135deg, #f48fb1, #ec407a); color: #fff; font-size: 18px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 24px rgba(236,64,122,.35); transition: transform .18s; letter-spacing: 2px; margin-top: 8px; }
+.btn-movie-next:active { transform: scale(.94); }
+
+/* ===== PAGE 6: RESULT / POSTER ===== */
+.result-box { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
+.poster-wrapper { width: 100%; max-width: 340px; border-radius: 20px; overflow: hidden; box-shadow: 0 12px 48px rgba(233,30,99,.3); }
+.poster-wrapper canvas { display: block; width: 100%; height: auto; }
+.btn-group { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.btn-back, .btn-share, .btn-restart, .btn-notify { height: 46px; padding: 0 28px; border: none; border-radius: 50px; font-size: 15px; font-weight: 700; cursor: pointer; transition: transform .18s, box-shadow .18s; letter-spacing: 1px; }
+.btn-back { background: rgba(255,255,255,.7); color: #e91e63; border: 2px solid #f48fb1; }
+.btn-share { background: linear-gradient(135deg, #f06292, #e91e63); color: #fff; box-shadow: 0 4px 16px rgba(233,30,99,.35); }
+.btn-restart { background: rgba(255,255,255,.7); color: #ad1457; border: 2px solid #f48fb1; }
+.btn-notify { background: linear-gradient(135deg, #7c4dff, #651fff); color: #fff; box-shadow: 0 4px 16px rgba(101,31,255,.35); }
+.btn-back:active, .btn-share:active, .btn-restart:active, .btn-notify:active { transform: scale(.94); }
+.btn-notify:disabled { opacity: .6; cursor: not-allowed; }
+
+/* Toast */
+.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 999; padding: 14px 28px; border-radius: 50px; font-size: 15px; font-weight: 600; color: #fff; box-shadow: 0 6px 24px rgba(0,0,0,.2); animation: toastIn .3s ease, toastOut .3s ease 2.4s forwards; pointer-events: none; white-space: nowrap; }
+.toast.success { background: #43a047; }
+.toast.error { background: #e53935; }
+.toast.info { background: #651fff; }
+@keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+@keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateX(-50%) translateY(-20px); } }
+
+/* ===== NAV DOTS ===== */
+.nav-dots { display: flex; gap: 8px; margin-top: 16px; }
+.nav-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(233,30,99,.25); transition: all .3s; }
+.nav-dot.active-dot { background: #e91e63; width: 24px; border-radius: 4px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 380px) {
+  .food-grid { gap: 8px; }
+  .food-card .food-emoji { font-size: 26px; }
+  .food-card .food-label { font-size: 11px; }
+  .btn-group { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ===== PAGE 1: INVITATION ===== -->
+  <div class="page active" id="page1">
+    <div class="invitation-box" id="invitationBox">
+      <h1 class="main-title">要不要和我一起约会？</h1>
+      <button class="btn-yes" onclick="goTo(2)">愿 意</button>
+      <button class="btn-no" id="btnNo" onmouseenter="dodgeButton()" onclick="dodgeButton()">不要</button>
+    </div>
+    <div class="nav-dots">
+      <span class="nav-dot active-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span>
+    </div>
+  </div>
+
+  <!-- ===== PAGE 2: CONFIRMATION ===== -->
+  <div class="page" id="page2">
+    <div class="confirm-box">
+      <span class="shy-emoji">😳</span>
+      <p class="warm-text">嘿嘿，我就知道你会的！</p>
+      <input type="text" class="name-input" id="nameInput" placeholder="你的名字/昵称？" maxlength="20">
+      <button class="btn-continue" onclick="goTo(3)">继 续</button>
+    </div>
+    <div class="nav-dots">
+      <span class="nav-dot"></span><span class="nav-dot active-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span>
+    </div>
+  </div>
+
+  <!-- ===== PAGE 3: TIME ===== -->
+  <div class="page" id="page3">
+    <div class="time-box">
+      <p class="time-label">📅 你想什么时候见面？</p>
+      <input type="date" class="date-input" id="dateInput">
+      <input type="time" class="time-input" id="timeInput" value="17:00">
+      <button class="btn-time-next" onclick="goTo(4)">选 好 了</button>
+    </div>
+    <div class="nav-dots">
+      <span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot active-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span>
+    </div>
+  </div>
+
+  <!-- ===== PAGE 4: FOOD ===== -->
+  <div class="page" id="page4">
+    <div class="food-box">
+      <p class="food-title">🍽️ 你想吃什么？（可多选）</p>
+      <div class="food-grid" id="foodGrid"></div>
+      <button class="btn-food-next" onclick="goTo(5)">选 好 了</button>
+    </div>
+    <div class="nav-dots">
+      <span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot active-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span>
+    </div>
+  </div>
+
+  <!-- ===== PAGE 5: MOVIE ===== -->
+  <div class="page" id="page5">
+    <div class="movie-box">
+      <p class="movie-title">🎬 想看哪部电影？（选一部）</p>
+      <div class="movie-grid" id="movieGrid"></div>
+      <button class="btn-movie-next" onclick="goTo(6)">生 成 海 报</button>
+    </div>
+    <div class="nav-dots">
+      <span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot active-dot"></span><span class="nav-dot"></span>
+    </div>
+  </div>
+
+  <!-- ===== PAGE 6: RESULT ===== -->
+  <div class="page" id="page6">
+    <div class="result-box">
+      <div class="poster-wrapper" id="posterWrapper">
+        <canvas id="posterCanvas"></canvas>
+      </div>
+      <div class="btn-group">
+        <button class="btn-notify" id="btnNotify" onclick="notifyHost()">📨 通知发起人</button>
+        <button class="btn-share" onclick="sharePoster()">📤 分享海报</button>
+        <button class="btn-restart" onclick="restart()">🔄 重新来过</button>
+      </div>
+    </div>
+    <div class="nav-dots">
+      <span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot"></span><span class="nav-dot active-dot"></span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===== STATE =====
+let currentPage = 1;
+const noTexts = ['不要', '想清楚再选', '你确定吗', '再想想', '真的要拒绝？', '别走…', '点错了吧', '我不信…', '给个机会', '求你了🥺'];
+
+// ===== PAGE 1: DODGE BUTTON =====
+function dodgeButton() {
+  const btn = document.getElementById('btnNo');
+  const box = document.getElementById('invitationBox');
+  const bw = box.clientWidth;
+  const bh = box.clientHeight;
+  const btnW = btn.offsetWidth;
+  const btnH = btn.offsetHeight;
+
+  // Pick a random corner: top-left, top-right, bottom-left, bottom-right
+  const corners = [
+    { left: Math.random() * 40 + 4,  top: Math.random() * 40 + 4 },
+    { left: bw - btnW - Math.random() * 40 - 4, top: Math.random() * 40 + 4 },
+    { left: Math.random() * 40 + 4,  top: bh - btnH - Math.random() * 40 - 4 },
+    { left: bw - btnW - Math.random() * 40 - 4, top: bh - btnH - Math.random() * 40 - 4 },
+  ];
+  const c = corners[Math.floor(Math.random() * corners.length)];
+  btn.style.left = c.left + 'px';
+  btn.style.top = c.top + 'px';
+
+  // Cycle text
+  const current = btn.textContent;
+  let idx = noTexts.indexOf(current);
+  idx = (idx + 1) % noTexts.length;
+  btn.textContent = noTexts[idx];
+
+  // Float hearts
+  spawnHearts();
+}
+
+function spawnHearts() {
+  const box = document.getElementById('invitationBox');
+  const hearts = ['💕','💖','💗','💝','💘','🌸'];
+  for (let i = 0; i < 4; i++) {
+    const h = document.createElement('span');
+    h.className = 'heart-deco';
+    h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+    h.style.left = (Math.random() * 80 + 10) + '%';
+    h.style.top = (Math.random() * 60 + 20) + '%';
+    h.style.animationDelay = (Math.random() * 1.5) + 's';
+    box.appendChild(h);
+    setTimeout(() => h.remove(), 3200);
+  }
+}
+
+// ===== PAGE 3: DATE/TIME DEFAULTS =====
+function initDateTime() {
+  const now = new Date();
+  const tomorrow = new Date(now);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const yyyy = tomorrow.getFullYear();
+  const mm = String(tomorrow.getMonth() + 1).padStart(2, '0');
+  const dd = String(tomorrow.getDate()).padStart(2, '0');
+  const dateInput = document.getElementById('dateInput');
+  dateInput.value = yyyy + '-' + mm + '-' + dd;
+  dateInput.min = yyyy + '-' + mm + '-' + dd; // no past dates
+  document.getElementById('timeInput').value = '17:00';
+}
+
+// ===== PAGE 4: FOOD GRID =====
+const foods = [
+  { emoji: '🥘', label: '粤菜' },
+  { emoji: '🍜', label: '东南亚菜' },
+  { emoji: '🍲', label: '火锅' },
+  { emoji: '🍖', label: '烧烤' },
+  { emoji: '🥩', label: '西餐' },
+  { emoji: '🏮', label: '居酒屋' },
+  { emoji: '🌶️', label: '川菜' },
+  { emoji: '🫑', label: '湘菜' },
+  { emoji: '😢', label: '饿肚子' },
+];
+
+function buildFoodGrid() {
+  const grid = document.getElementById('foodGrid');
+  grid.innerHTML = '';
+  foods.forEach((f, i) => {
+    const card = document.createElement('div');
+    card.className = 'food-card';
+    card.dataset.index = i;
+    card.innerHTML = `<span class="food-emoji">${f.emoji}</span><span class="food-label">${f.label}</span><span class="check-badge">✓</span>`;
+    card.onclick = () => {
+      card.classList.toggle('selected');
+    };
+    grid.appendChild(card);
+  });
+}
+
+function getSelectedFoods() {
+  const cards = document.querySelectorAll('#foodGrid .food-card.selected');
+  return Array.from(cards).map(c => foods[parseInt(c.dataset.index)]);
+}
+
+// ===== PAGE 5: MOVIE SELECTION =====
+const movies = [
+  { emoji: '🕷️', label: '蜘蛛侠' },
+  { emoji: '🧚', label: '八仙' },
+  { emoji: '⚽', label: '功夫女足' },
+  { emoji: '😍', label: '痴迷' },
+];
+
+function buildMovieGrid() {
+  const grid = document.getElementById('movieGrid');
+  grid.innerHTML = '';
+  movies.forEach((m, i) => {
+    const card = document.createElement('div');
+    card.className = 'movie-card';
+    card.dataset.index = i;
+    card.innerHTML = `<span class="movie-emoji">${m.emoji}</span><span class="movie-label">${m.label}</span><span class="check-badge">✓</span>`;
+    card.onclick = () => {
+      // Single select: deselect all others
+      document.querySelectorAll('#movieGrid .movie-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+    };
+    grid.appendChild(card);
+  });
+}
+
+function getSelectedMovie() {
+  const card = document.querySelector('#movieGrid .movie-card.selected');
+  return card ? movies[parseInt(card.dataset.index)] : null;
+}
+
+// ===== PAGE 6: POSTER =====
+function drawPoster() {
+  const canvas = document.getElementById('posterCanvas');
+  const nameVal = (document.getElementById('nameInput').value || '').trim();
+  const dateVal = document.getElementById('dateInput').value;
+  const timeVal = document.getElementById('timeInput').value;
+  const selected = getSelectedFoods();
+  const selectedMovie = getSelectedMovie();
+
+  // Format date
+  let dateStr = dateVal;
+  if (dateVal) {
+    const [y, m, d] = dateVal.split('-');
+    dateStr = `${y}年${parseInt(m)}月${parseInt(d)}日`;
+  }
+
+  const W = 1080, H = 1440;
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  // Background gradient
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, '#fce4ec');
+  grad.addColorStop(.4, '#f8bbd0');
+  grad.addColorStop(.7, '#f48fb1');
+  grad.addColorStop(1, '#ec407a');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // Floating hearts
+  const heartPositions = [];
+  for (let i = 0; i < 28; i++) {
+    heartPositions.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      s: 16 + Math.random() * 40,
+      o: .08 + Math.random() * .14,
+    });
+  }
+  heartPositions.forEach(h => {
+    ctx.save();
+    ctx.globalAlpha = h.o;
+    ctx.fillStyle = '#e91e63';
+    ctx.font = `${h.s}px serif`;
+    ctx.fillText('♥', h.x, h.y);
+    ctx.restore();
+  });
+
+  // Top decorative line
+  ctx.strokeStyle = 'rgba(233,30,99,.3)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(80, 80);
+  ctx.lineTo(W - 80, 80);
+  ctx.stroke();
+
+  // Title
+  ctx.fillStyle = '#d81b60';
+  ctx.font = 'bold 52px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('💕 约会邀请函 💕', W / 2, 140);
+
+  // Subtitle line
+  ctx.strokeStyle = 'rgba(233,30,99,.25)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(200, 170);
+  ctx.lineTo(W - 200, 170);
+  ctx.stroke();
+
+  // Center card area
+  const cardX = 100, cardY = 210, cardW = W - 200, cardH = 960;
+  ctx.fillStyle = 'rgba(255,255,255,.6)';
+  ctx.beginPath();
+  roundRect(ctx, cardX, cardY, cardW, cardH, 30);
+  ctx.fill();
+
+  // Card border
+  ctx.strokeStyle = 'rgba(233,30,99,.35)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  roundRect(ctx, cardX, cardY, cardW, cardH, 30);
+  ctx.stroke();
+
+  let cy = cardY + 70;
+
+  // Date & Time
+  ctx.fillStyle = '#ad1457';
+  ctx.font = 'bold 30px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('📅 见面时间', W / 2, cy);
+  cy += 50;
+
+  ctx.fillStyle = '#d81b60';
+  ctx.font = 'bold 38px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillText(dateStr, W / 2, cy);
+  cy += 46;
+
+  ctx.fillStyle = '#e91e63';
+  ctx.font = 'bold 44px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillText(timeVal, W / 2, cy);
+  cy += 56;
+
+  // Name (if provided)
+  if (nameVal) {
+    ctx.fillStyle = '#c2185b';
+    ctx.font = 'bold 26px "PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText(nameVal + ' 的约会邀请', W / 2, cy);
+    cy += 38;
+  }
+  cy += 20;
+
+  // Divider
+  ctx.strokeStyle = 'rgba(233,30,99,.2)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(cardX + 60, cy - 14);
+  ctx.lineTo(cardX + cardW - 60, cy - 14);
+  ctx.stroke();
+
+  // Food
+  ctx.fillStyle = '#ad1457';
+  ctx.font = 'bold 28px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillText('🍽️ 想吃的美食', W / 2, cy + 10);
+  cy += 55;
+
+  if (selected.length === 0) {
+    ctx.fillStyle = '#f48fb1';
+    ctx.font = '24px "PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText('（还没来得及选呢）', W / 2, cy);
+    cy += 40;
+  } else {
+    const badgeW = 150, badgeH = 44, gap = 16, maxPerRow = 3;
+    const totalW = Math.min(selected.length, maxPerRow) * badgeW + (Math.min(selected.length, maxPerRow) - 1) * gap;
+    let startX = W / 2 - totalW / 2;
+    for (let i = 0; i < selected.length; i++) {
+      const col = i % maxPerRow;
+      const row = Math.floor(i / maxPerRow);
+      const bx = startX + col * (badgeW + gap);
+      const by = cy + row * (badgeH + gap);
+
+      ctx.fillStyle = '#fce4ec';
+      ctx.strokeStyle = '#e91e63';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      roundRect(ctx, bx, by, badgeW, badgeH, 22);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#d81b60';
+      ctx.font = 'bold 24px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.fillText(selected[i].emoji + ' ' + selected[i].label, bx + badgeW / 2, by + badgeH / 2 + 9);
+    }
+    cy += (Math.ceil(selected.length / maxPerRow)) * (badgeH + gap) + 20;
+  }
+
+  // Divider
+  cy += 10;
+  ctx.strokeStyle = 'rgba(233,30,99,.2)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(cardX + 60, cy);
+  ctx.lineTo(cardX + cardW - 60, cy);
+  ctx.stroke();
+
+  // Movie
+  ctx.fillStyle = '#ad1457';
+  ctx.font = 'bold 28px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillText('🎬 想看的电影', W / 2, cy + 24);
+  cy += 55;
+
+  if (selectedMovie) {
+    ctx.fillStyle = '#fce4ec';
+    ctx.strokeStyle = '#e91e63';
+    ctx.lineWidth = 2;
+    const bw = 240, bh = 50;
+    ctx.beginPath();
+    roundRect(ctx, W/2 - bw/2, cy, bw, bh, 25);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = '#d81b60';
+    ctx.font = 'bold 28px "PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText(selectedMovie.emoji + ' ' + selectedMovie.label, W / 2, cy + bh/2 + 10);
+    cy += bh + 20;
+  } else {
+    ctx.fillStyle = '#f48fb1';
+    ctx.font = '24px "PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText('（还没选呢）', W / 2, cy);
+    cy += 40;
+  }
+
+  // Bottom message inside card
+  cy = Math.max(cy + 40, cardY + cardH - 130);
+  ctx.fillStyle = '#d81b60';
+  ctx.font = 'bold 36px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillText('不见不散 💗', W / 2, cy);
+
+  // Bottom area outside card
+  cy = cardY + cardH + 50;
+  ctx.fillStyle = 'rgba(233,30,99,.5)';
+  ctx.font = '22px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillText('— 期待与你共度美好时光 —', W / 2, cy);
+
+  cy += 45;
+  ctx.fillStyle = 'rgba(173,20,87,.4)';
+  ctx.font = '20px "PingFang SC","Microsoft YaHei",sans-serif';
+  const now = new Date();
+  ctx.fillText(`生成于 ${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()}`, W / 2, cy);
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+// ===== SHARE =====
+function sharePoster() {
+  const canvas = document.getElementById('posterCanvas');
+  canvas.toBlob(function(blob) {
+    if (!blob) { alert('海报生成失败，请重试'); return; }
+    const url = URL.createObjectURL(blob);
+    if (navigator.share) {
+      navigator.share({
+        title: '约会邀请',
+        text: '期待与你约会！',
+        files: [new File([blob], 'date-invitation.png', { type: 'image/png' })]
+      }).catch(() => fallbackShare(url));
+    } else {
+      fallbackShare(url);
+    }
+  }, 'image/png');
+}
+
+function fallbackShare(url) {
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = '约会邀请海报.png';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+
+// ===== TOAST =====
+function showToast(msg, type) {
+  const t = document.createElement('div');
+  t.className = 'toast ' + (type || 'info');
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2800);
+}
+
+// ===== NOTIFY HOST =====
+const FEISHU_WEBHOOK = 'https://open.feishu.cn/open-apis/bot/v2/hook/131f290a-fe12-42e9-9823-b65a9a813421';
+
+function getResultText() {
+  const nameVal = (document.getElementById('nameInput').value || '').trim();
+  const dateVal = document.getElementById('dateInput').value;
+  const timeVal = document.getElementById('timeInput').value;
+  const selected = getSelectedFoods();
+  const movie = getSelectedMovie();
+  let dateDisplay = dateVal;
+  if (dateVal) { const [y, m, d] = dateVal.split('-'); dateDisplay = `${y}年${parseInt(m)}月${parseInt(d)}日`; }
+  const foodsText = selected.map(f => f.emoji + f.label).join('、') || '（未选择）';
+  const movieText = movie ? movie.emoji + movie.label : '（未选择）';
+  const who = nameVal || '匿名';
+  return `💕 ${who} 接受了约会邀请！\n📅 ${dateDisplay} ${timeVal}\n🍽️ ${foodsText}\n🎬 ${movieText}`;
+}
+
+async function notifyHost() {
+  const btn = document.getElementById('btnNotify');
+  btn.disabled = true;
+  btn.textContent = '⏳ 发送中...';
+
+  const nameVal = (document.getElementById('nameInput').value || '').trim();
+  const dateVal = document.getElementById('dateInput').value;
+  const timeVal = document.getElementById('timeInput').value;
+  const selected = getSelectedFoods();
+  const movie = getSelectedMovie();
+  let dateDisplay = dateVal;
+  if (dateVal) { const [y, m, d] = dateVal.split('-'); dateDisplay = `${y}年${parseInt(m)}月${parseInt(d)}日`; }
+  const foodsText = selected.map(f => f.label).join('、') || '（未选择）';
+  const movieText = movie ? movie.label : '（未选择）';
+  const who = nameVal || '匿名';
+
+  const message = [
+    '💕 ' + who + ' 接受了你的约会邀请！',
+    '',
+    '📅 见面时间：' + dateDisplay + ' ' + timeVal,
+    '🍽️ 想吃的美食：' + foodsText,
+    '🎬 想看的电影：' + movieText,
+    '',
+    '— 快去准备吧！'
+  ].join('\n');
+
+  try {
+    const resp = await fetch(FEISHU_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        msg_type: 'text',
+        content: { text: message }
+      })
+    });
+    const result = await resp.json();
+    if (result.code === 0 || result.StatusCode === 0) {
+      showToast('✅ 已通知发起人！消息已发送', 'success');
+      btn.textContent = '✅ 已通知';
+    } else {
+      throw new Error('webhook failed');
+    }
+  } catch (e) {
+    // Fallback: copy to clipboard
+    const text = getResultText();
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast('📋 结果已复制！请粘贴发送给发起人', 'info');
+    } catch (e2) {
+      showToast('⚠️ 自动通知失败，请截图发给发起人', 'error');
+    }
+    btn.textContent = '📨 重试通知';
+  }
+  btn.disabled = false;
+}
+
+// ===== NAVIGATION =====
+function goTo(pageNum) {
+  if (pageNum === 3) initDateTime();
+  if (pageNum === 4) buildFoodGrid();
+  if (pageNum === 5) buildMovieGrid();
+  if (pageNum === 6) drawPoster();
+
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page' + pageNum);
+  if (target) target.classList.add('active');
+
+  // Update dots
+  document.querySelectorAll('.nav-dot').forEach((d, i) => {
+    d.classList.toggle('active-dot', i === pageNum - 1);
+  });
+
+  currentPage = pageNum;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restart() {
+  // Reset no button
+  const btnNo = document.getElementById('btnNo');
+  btnNo.style.left = '';
+  btnNo.style.top = '';
+  btnNo.textContent = '不要';
+  // Clear food selection
+  document.querySelectorAll('#foodGrid .food-card').forEach(c => c.classList.remove('selected'));
+  // Clear movie selection
+  document.querySelectorAll('#movieGrid .movie-card').forEach(c => c.classList.remove('selected'));
+  // Reset notify button
+  const btnNotify = document.getElementById('btnNotify');
+  if (btnNotify) { btnNotify.textContent = '📨 通知发起人'; btnNotify.disabled = false; }
+  goTo(1);
+}
+
+// ===== INITIAL TRIGGERS =====
+// Place "不要" button near center initially
+window.addEventListener('load', () => {
+  const btnNo = document.getElementById('btnNo');
+  const box = document.getElementById('invitationBox');
+  // Defer positioning until layout done
+  setTimeout(() => {
+    btnNo.style.left = (box.clientWidth / 2 - btnNo.offsetWidth / 2) + 'px';
+    btnNo.style.top = (box.clientHeight * 0.72) + 'px';
+  }, 50);
+});
+</script>
+
+</body>
+</html>
